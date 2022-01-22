@@ -1,0 +1,4 @@
+numpy==1.22.1
+requests==2.27.1
+tqdm==4.62.3
+click==8.0.3
