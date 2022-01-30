@@ -32,7 +32,7 @@ def download_movie_lens(
 def extract_dataset(src: pathlib.Path, dest: pathlib.Path, force=False) -> None:
     dataset_loc = dest / "ml-latest-small"
     if dataset_loc.is_dir() and not force:
-        print(f"Skipping extracted dataset at {dataset_loc}")
+        print(f"Skipping extraction - using dataset at {dataset_loc}")
     else:
         with zipfile.ZipFile(src, "r") as zipped:
             print("Extracting MovieLens100k...")

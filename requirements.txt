@@ -2,3 +2,5 @@ numpy==1.22.1
 requests==2.27.1
 tqdm==4.62.3
 click==8.0.3
+pandas==1.4.0
+seaborn==0.11.2
