@@ -1,7 +1,6 @@
 import zipfile
 import pathlib
 import requests
-import tqdm
 import click
 import shutil
 

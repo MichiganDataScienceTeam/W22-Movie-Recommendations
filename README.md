@@ -11,7 +11,6 @@ _W2022 MDST Project: Building a Movie Recommender System_
 -   [A Look at the Data](#a-look-at-the-data)
 -   [Project Roadmap](#project-roadmap)
 -   [Setup](#setup)
--   [A Tour of the Repository](#a-tour-of-the-repository)
 -   [Relevant Links](#relevant-links)
 
 ## Introduction
@@ -55,7 +54,7 @@ Here are some of the relevant data science buzzwords and jargon for this project
 
 ## A Look at the Data
 
-The data is from the [Movie Lens | Group Lens dataset](https://grouplens.org/datasets/movielens/). The dataset can also be obtained through [TensorFlow](https://www.tensorflow.org/datasets/catalog/movielens). The main focus will be on the 100k dataset. **You will not have to download the dataset directly, the [Setup](#setup) section has directions for fetching the dataset.**
+The data is from the [Movie Lens | Group Lens dataset](https://grouplens.org/datasets/movielens/). The dataset can also be obtained through [TensorFlow](https://www.tensorflow.org/datasets/catalog/movielens). The main focus will be on the 100k dataset.
 
 ## Project Roadmap
 
@@ -117,15 +116,23 @@ Getting all setup to contribute to this project is as simple as a few commands.
 
 ### Virtual Environment
 
-The first step is to initialize the virtual environment with all the required packages. Luckily, this isn't too hard.
+We are going to initialize a Python virtual environment with all the required packages. We use a virtual environment here to isolate our development environment from the rest of your computer. This is helpful in not leaving messes and keeping project setups contained.
 
 First create a Python 3.8 virtual environment. The virtual environment creation code for Linux/MacOS is below:
 
 ```bash
-python3.8 -m venv venv
+python3 -m venv venv
 ```
 
-After activating the virtual environment (this will depend on your system), install the required dependencies using
+Now that you have a virtual environment installed, you need to activate it. This may depend on your system, but on Linux/MacOS, this can be done using
+
+```bash
+source ./venv/bin/activate
+```
+
+Now your computer will know to use the Python installation in the virtual environment rather than your default installation.
+
+After the virtual environment has been activated, we can install the required dependencies into this environment using
 
 ```bash
 pip install -r requirements.txt
@@ -138,8 +145,6 @@ pip install -r requirements-dev.txt
 ```
 
 ### Obtaining the Data
-
-**Note: You only need to download the data if you are unable to use TensorFlow Datasets to do so. If you are able to access the `tensorflow_datasets` package, you can skip this section and get started working!**
 
 Getting the MovieLens dataset this project utilizes is not too difficult as well. With your virtual environment activated, run
 
@@ -158,6 +163,12 @@ All download options can be viewed using
 ```bash
 python setup.py --help
 ```
+
+### Known Issues
+
+-   M1 Mac users may have trouble installing Scipy through pip due to problems with support for BLAS (_Basic Linear Algebra Subprograms_) There are two options:
+    -   Remove `seaborn==0.11.2` from the dependencies and instead use matplotlib for visualization functionality
+    -   Manually install openBLAS and compile Scipy from scratch (not recommended - we likely cannot help you debug any issues with this)
 
 ## Relevant Links
 
