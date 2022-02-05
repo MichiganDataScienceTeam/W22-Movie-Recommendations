@@ -3,10 +3,12 @@ import pathlib
 import requests
 import tqdm
 import click
+import shutil
 
 movie_lens_url = (
     "https://files.grouplens.org/datasets/movielens/ml-latest-small.zip"
 )
+dataset_dir_name = "ml-latest-small"
 
 
 def download_movie_lens(
@@ -14,35 +16,35 @@ def download_movie_lens(
 ) -> pathlib.Path:
     if not temp_dir.is_dir():
         temp_dir.mkdir(parents=True)
-    dest = temp_dir / "movielens100k.zip"
+    dest = temp_dir / "movielens.zip"
     if dest.is_file() and not clear_cache:
         print(f"Skipping download - using cached dataset at {dest}")
     else:
         r = requests.get(movie_lens_url, stream=True)
         if r.status_code == 200:
-            print("Downloading MovieLens100k...")
+            print("Downloading MovieLens...")
             with dest.open("wb") as binary_zip:
-                binary_zip.writelines(tqdm.tqdm(r.iter_content()))
-            print(f"Downloaded MovieLens100k to {dest}")
+                shutil.copyfileobj(r.raw, binary_zip)
+            print(f"Downloaded MovieLens to {dest}")
         else:
             print(f"Error: download reported status code {r.status_code}")
     return dest
 
 
 def extract_dataset(src: pathlib.Path, dest: pathlib.Path, force=False) -> None:
-    dataset_loc = dest / "ml-latest-small"
+    dataset_loc = dest / dataset_dir_name
     if dataset_loc.is_dir() and not force:
         print(f"Skipping extraction - using dataset at {dataset_loc}")
     else:
         with zipfile.ZipFile(src, "r") as zipped:
-            print("Extracting MovieLens100k...")
+            print("Extracting MovieLens...")
             zipped.extractall(dest)
-        print(f"Extracted MovieLens100k to {dest}")
+        print(f"Extracted MovieLens to {dest}")
 
 
 def clean_dir(dir: pathlib.Path) -> None:
     temp_dir = dir / "temp"
-    dataset_loc = dir / "ml-latest-small"
+    dataset_loc = dir / dataset_dir_name
     print("Removing cached data...", end="")
     for file in temp_dir.iterdir():
         file.unlink()
