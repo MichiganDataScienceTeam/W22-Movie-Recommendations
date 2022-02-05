@@ -139,6 +139,8 @@ pip install -r requirements-dev.txt
 
 ### Obtaining the Data
 
+**Note: You only need to download the data if you are unable to use TensorFlow Datasets to do so. If you are able to access the `tensorflow_datasets` package, you can skip this section and get started working!**
+
 Getting the MovieLens dataset this project utilizes is not too difficult as well. With your virtual environment activated, run
 
 ```bash
@@ -156,38 +158,6 @@ All download options can be viewed using
 ```bash
 python setup.py --help
 ```
-
-## A Tour of the Repository
-
-After the setup is complete, your directory should look a little like this:
-
-```bash
-movie-recommendations
-├── README.md
-├── data
-│   ├── ml-latest-small
-│   │   ├── README.txt
-│   │   ├── links.csv
-│   │   ├── movies.csv
-│   │   ├── ratings.csv
-│   │   └── tags.csv
-│   └── temp
-│       └── movielens100k.zip
-├── mvrc
-│   ├── __init__.py
-│   └── recommender.py
-├── requirements-dev.txt
-├── requirements.txt
-├── setup.py
-├── starter_code
-│   └── dataset_exploration.ipynb
-└── venv
-    └── ...
-```
-
--   `data` will be where the MovieLens dataset is stored for our use. The raw zip file is stored in `data/temp`
--   `mvrc` will contain the recommender system code which will developed through the course of this project
--   `starter_code` will provide some helpful starter code for certain parts of this project such as EDA
 
 ## Relevant Links
 
