@@ -7,7 +7,7 @@ class Trainable(abc.ABC):
     An abstract base class for trainable ML algorithms
     """
 
-    def parameters(self) -> tuple:
+    def parameters(self):
         """
         Returns the parameters of the model
 
@@ -17,7 +17,7 @@ class Trainable(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def loss(self, X: numpy.ndarray, y: numpy.ndarray) -> numpy.float64:
+    def loss(self, X, y):
         """
         Determines the loss of the model when run on inputs X with ground truths y.
 
@@ -34,7 +34,7 @@ class Trainable(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def grad(self) -> tuple:
+    def grad(self):
         """
         Returns the gradients of the model parameters after the previous call to loss(),
         in the same order as parameters()

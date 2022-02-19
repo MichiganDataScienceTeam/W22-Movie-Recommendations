@@ -2,8 +2,8 @@ from trainable import Trainable
 import numpy as np
 
 
-class LinearRegressor(Trainable):
-    def __init__(self, N: int, reg: np.float64):
+class LinearRegressor:
+    def __init__(self, N, reg):
         """
         Creates a linear regressor that predicts a single float value from
         a vector of inputs with size D
@@ -16,7 +16,7 @@ class LinearRegressor(Trainable):
         self.bias = 0.001 * np.random.randn(1)
         self.reg = reg
 
-    def predict(self, X: np.ndarray) -> np.ndarray:
+    def predict(self, X):
         """
         Predicts a set of float values given a batch of inputs
 
@@ -70,3 +70,14 @@ class LinearRegressor(Trainable):
         )
         self.b_grad = -1 * np.sum(y - pred) / X.shape[0]
         return self.W_grad, self.b_grad
+
+    def update_parameters(self, weights, bias):
+        """
+        Updates model parameters to new values
+
+        Args:
+            weights (np.ndarray): new weight value
+            bias (np.ndarray): new bias value
+        """
+        self.weights = weights
+        self.bias = bias
