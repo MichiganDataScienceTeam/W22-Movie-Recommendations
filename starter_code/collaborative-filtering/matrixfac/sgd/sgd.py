@@ -22,16 +22,4 @@ def sgd(
         learning_rate (float): Controls the magnitude of each weight update
     """
     # your implementation here!
-    losses = []
-    B = X_train.shape[1]
-    for i in range(num_iter):
-        indices = np.random.randint(0, B, (batch_size))
-        batched_inputs, batched_labels = X_train[indices], y_train[indices]
-        loss = model.loss(batched_inputs, batched_labels, grad=True)
-        losses.append(loss)
-        # val_loss = model.loss(X_test, y_test)
-        # val_losses.append(val_loss)
-        if i % 250 == 0:
-            print(f"Iteration {i}: training loss = {loss}")
-        for param, grad in zip(model.parameters(), model.grad()):
-            param -= learning_rate * grad
+    pass
