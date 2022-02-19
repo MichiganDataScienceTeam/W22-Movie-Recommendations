@@ -79,5 +79,5 @@ class LinearRegressor:
             weights (np.ndarray): new weight value
             bias (np.ndarray): new bias value
         """
-        self.weights = weights
+        self.W = weights
         self.bias = bias
