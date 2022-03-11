@@ -3,12 +3,12 @@ import numpy as np
 
 
 def sgd(
-    model: Trainable,
-    X_train: np.ndarray,
-    y_train: np.ndarray,
-    batch_size: int,
-    num_iter: int,
-    learning_rate: float,
+    model,
+    X_train,
+    y_train,
+    batch_size,
+    num_iter,
+    learning_rate,
 ):
     """
     Trains the given model on the input data using stochastic gradient descent

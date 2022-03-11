@@ -1,5 +1,5 @@
 import abc
-import numpy
+from numpy import ndarray
 
 
 class Trainable(abc.ABC):
@@ -17,13 +17,14 @@ class Trainable(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def loss(self, X, y):
+    def loss(self, X, y, grad=False):
         """
         Determines the loss of the model when run on inputs X with ground truths y.
 
         Args:
             X (numpy.ndarray): Batch of model inputs
             y (numpy.ndarray): Batch of ground truths per model inputs
+            grad (boolean): Enables whether to cache values for gradient computation. Defaults to False.
 
         Raises:
             NotImplementedError: Raised if this function is not overridden by subclasses.
