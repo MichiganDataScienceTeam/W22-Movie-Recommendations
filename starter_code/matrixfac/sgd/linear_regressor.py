@@ -2,7 +2,7 @@ from trainable import Trainable
 import numpy as np
 
 
-class LinearRegressor:
+class LinearRegressor(Trainable):
     def __init__(self, N, reg):
         """
         Creates a linear regressor that predicts a single float value from
