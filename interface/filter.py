@@ -11,6 +11,8 @@ class Filter:
         recommendations = self.drop_movies(recommendations, movies)
         recommendations = self.drop_year(recommendations, filters)
         recommendations = self.drop_genres(recommendations, filters)
+        recommendations = self.drop_audience(recommendations, filters)
+        recommendations = self.drop_runtime(recommendations, filters)
 
         # print(recommendations['movie'][:N].to_list())
         return recommendations['movie'][:N].to_list()
@@ -24,4 +26,12 @@ class Filter:
 
 
     def drop_genres(self, recommendations, filters): # maybe poor name bc its filtering not dropping
+        return recommendations
+
+
+    def drop_audience(self, recommendations, filters):
+        return recommendations
+
+
+    def drop_runtime(self, recommendations, filters):
         return recommendations
