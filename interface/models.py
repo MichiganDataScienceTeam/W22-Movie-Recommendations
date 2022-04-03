@@ -38,6 +38,7 @@ class KNN_COLLAB(BaseModel):
             print('retrieved', mov_id)
             helper = np.add(helper, self.utility_matrix.iloc[mov_id].values.reshape(1,-1) )
 
+
         return helper/len(movie)
 
 
