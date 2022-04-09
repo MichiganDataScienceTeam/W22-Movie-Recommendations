@@ -27,9 +27,31 @@ class App(Tk):
         Tk.__init__(self, *args, **kwargs)
 
 
-        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
+        self.title_font = tkfont.Font(family='MS Serif', size=18, weight="bold", slant="italic")
         self.title("Movie Recommendations!")
+        window_width = 1000
+        window_height = 600
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        center_x = int(screen_width/2 - window_width / 2)
+        center_y = int(screen_height/2 - window_height / 2)
+        self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+        # self.iconbitmap('icons/MDST_logo.ico') # icon change code
+        self.iconphoto(TRUE, tk.PhotoImage(file='./icons/MDST-logo.png'))
+        # self.PhotoImage(file = 'icons/MDST-logo')
         # self.
+        # Read the Image
+        image = Image.open("./icons/MDST-logo.png")
+ 
+        # Resize the image using resize() method
+        resize_image = image.resize((175, 52))
+        img = ImageTk.PhotoImage(resize_image)
+ 
+        # create label and add resize image
+        label1 = Label(image=img)
+        label1.image = img
+        label1.pack(side=BOTTOM, anchor=SE)
+
 
         container = Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -62,28 +84,35 @@ class App(Tk):
 class StartPage(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(3, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(3, weight=1)
         self.controller = controller
-        label = Label(self, text="Movie Recommendations!", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-
+        label = Label(self, text="Welcome To Our Movie Recommender!", font=controller.title_font)
+        label.grid(row=0, column=1)
+        
         Button(self, text="Click here to take a quick quiz",\
-                            command=lambda: controller.show_frame("Quiz")).pack()
+                            command=lambda: controller.show_frame("Quiz"),height= 2, width=20).grid(row=1, column=1)
         Button(self, text="Learn more about the project", command=lambda: \
-            open_link("https://github.com/MichiganDataScienceTeam/movie-recommendations")).pack()
-
+            open_link("https://github.com/MichiganDataScienceTeam/movie-recommendations")).grid(row=2, column=1)
         # Button(self, text="Add Filter", command=lambda: controller.show_frame("Filter")).pack()
 
 class Quiz(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(10, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(5, weight=1)
         self.controller = controller
         label = Label(self, text="Quiz", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        label.grid(row=0, column=2)
 
         self.selections = []
         # QUESTION 1
         label_q1 =  Label(self, text='Pick Movies')
-        label_q1.pack(side='top')
+        label_q1.grid(row=1, column=1)
 
         list_q1 = {  # title: movie id (but really a dict...)
             'Saw': 7396,
@@ -94,7 +123,7 @@ class Quiz(Frame):
         self.selections.append(StringVar())
         self.selections[0].set(sorted(list_q1.keys())[0])
         menu_q1 = OptionMenu(self, self.selections[0], *sorted(list_q1.keys()), command= lambda sel = self.selections[0]: self.update_movie(sel, 1, list_q1)) # 1, list_q1
-        menu_q1.pack()
+        menu_q1.grid(row=2, column=1)
         # QUESTION 1
 
 
@@ -108,7 +137,7 @@ class Quiz(Frame):
         self.selections.append(StringVar())
         self.selections[1].set('Moneyball')
         menu_q2 = OptionMenu(self, self.selections[1], *sorted(list_q2.keys()), command=lambda sel = self.selections[1]: self.update_movie(sel, 2, list_q2))
-        menu_q2.pack()
+        menu_q2.grid(row=2, column=2)
         # QUESTION 2
 
         # QUESTION 3
@@ -121,7 +150,7 @@ class Quiz(Frame):
         self.selections.append(StringVar())
         self.selections[2].set('Eagle Eye')
         menu_q3 = OptionMenu(self, self.selections[2], *sorted(list_q3.keys()), command=lambda sel = self.selections[2]: self.update_movie(sel, 3, list_q3))
-        menu_q3.pack()
+        menu_q3.grid(row=2, column=3)
         # QUESTION 3  
 
 
@@ -129,12 +158,12 @@ class Quiz(Frame):
 
         # FILTERING
         label_filter =  Label(self, text='Filters:')
-        label_filter.pack()
+        label_filter.grid(row=3, column=1)
 
         # list_q2 = ['Brad Pitt', 'Tom Hanks', 'Jennifer Lawrence', 'Meryl  Streep', 'Robert Downey Jr.', 'Johnny Depp'] # actors/actresses will not be used
 
 
-        Label(self, text="Genres: What you want / What you don't want").pack()
+        Label(self, text="Genres: What you want / What you don't want").grid(row=4, column=1)
         # GENRE
         list_genres = [
             "No Filter",
@@ -160,23 +189,33 @@ class Quiz(Frame):
         # GENRE WE WANT
         initial_genres = StringVar()
         initial_genres.set(list_genres[0])
-        OptionMenu(self, initial_genres, *list_genres, command=lambda sel = initial_genres: self.update_genre(sel, 0)).pack()
+        OptionMenu(self, initial_genres, *list_genres, command=lambda sel = initial_genres: self.update_genre(sel, 0)).grid(row=5, column=1)
         # GENRE WE DONT WANT
         initial_genres_1 = StringVar()
         initial_genres_1.set(list_genres[0])
-        OptionMenu(self, initial_genres_1, *list_genres, command=lambda sel = initial_genres_1: self.update_genre(sel, 1)).pack()
+        OptionMenu(self, initial_genres_1, *list_genres, command=lambda sel = initial_genres_1: self.update_genre(sel, 1)).grid(row=5, column=2)
 
         # INTENDED AUDIENCE
         list_audience = [
             ""
         ]
-
-
         # FILTERING
 
 
+        # Read the Image
+        image1 = Image.open("./icons/starwars.png")
+ 
+        # Resize the image using resize() method
+        resize_image1 = image1.resize((312, 234))
+        meme_img1 = ImageTk.PhotoImage(resize_image1)
+ 
+        # create label and add resize image
+        meme_label1 = Label(self, image=meme_img1)
+        meme_label1.image = meme_img1
+        meme_label1.grid(row=6, column=0)
+        Button(self, text="Get Results",command=lambda: self.controller.show_frame("Results")).grid(row=7, column=1) # back button
+        Button(self, text="Back to Menu",command=lambda: self.controller.show_frame("StartPage")).grid(row=10, column=0, sticky='w')
 
-        Button(self, text="Get Results",command=lambda: self.controller.show_frame("Results")).pack() # back button
 
     def update_movie(self, selection, q_num, mapping): # 1-indexed
         global MOVIE_ID
@@ -194,13 +233,28 @@ class Results(Frame):
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         self.controller = controller
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(5, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(10, weight=1)
         label = Label(self, text="Recommendations", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
+        label.grid(row=0, column=1)
+        # Read the Image
+        image = Image.open("./icons/Gladiator.png")
+ 
+        # Resize the image using resize() method
+        resize_image = image.resize((312, 234))
+        meme_img = ImageTk.PhotoImage(resize_image)
+ 
+        # create label and add resize image
+        meme_label = Label(self, image=meme_img)
+        meme_label.image = meme_img
+        meme_label.grid(row=3, column=1)
 
         self.knn = models.KNN_COLLAB('no pkl', 'no_csv')
         self.matrixfact = models.MatrixFactorizationModel('./data/torchsvd.pt')
 
-        Button(self, text="Another?",command= self.update).pack() # back button
+        Button(self, text="Another?",command= self.update).grid(row=2, column=1) # back button
 
 
     def show_predictions(self):
@@ -208,22 +262,22 @@ class Results(Frame):
         list_knn = self.knn.recommend(MOVIE_ID, FILTERS)
         list_matrix_fact = self.matrixfact.recommend(MOVIE_ID, FILTERS)
 
-        Label(self, text="KNN Predictions").pack()
+        Label(self, text="KNN Predictions").grid(row=1, column=1)
         initial_q1  = StringVar()
-        initial_q1.set(list_knn[0])
+        initial_q1.set(list_knn[0]) 
         self.menu_knn = OptionMenu(self, initial_q1, *list_knn)
-        self.menu_knn.pack()
+        self.menu_knn.grid(row=2, column=1)
 
-        Label(self, text="Matrix Factorization Predictions").pack()
+        Label(self, text="Matrix Factorization Predictions").grid(row=1, column=2)
         initial_q2  = StringVar()
         initial_q2.set(list_matrix_fact[0])
-        self.menu_matixfact = OptionMenu(self, initial_q2, *list_matrix_fact)
-        self.menu_matixfact.pack()
+        self.menu_matrixfact = OptionMenu(self, initial_q2, *list_matrix_fact)
+        self.menu_matrixfact.grid(row=2, column=2)
 
 
     def update(self):
-        self.menu_knn.pack_forget()
-        self.menu_matixfact.pack_forget()
+        self.menu_knn.grid_forget()
+        self.menu_matrixfact.grid_forget()
         self.controller.show_frame("Quiz")
 
 
