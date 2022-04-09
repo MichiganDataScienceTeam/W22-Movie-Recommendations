@@ -1,13 +1,22 @@
 from ctypes import alignment
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from tkinter import font as tkfont
+from PIL import Image, ImageTk
 import webbrowser
+# from matplotlib.font_manager import _Weight
 import models
 
 #GLOBALS -- probably can/should do this in a better way...
 MOVIE_ID = [7396, 5756, 2640]  # important that it is from csv matrix
+FILTERS = {
+    'genre': ['Genre_No Filter', 'Genre_No Filter'],
+    'before_year': 2022,
+    'after_year': 1800,
+    'less_runtime': 400,
 
+}
 
 def open_link(url):
     webbrowser.open_new(url);
@@ -44,7 +53,7 @@ class App(Tk):
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
         if page_name == 'Results': 
-            self.frames[page_name].knn_collab()
+            self.frames[page_name].show_predictions()
 
         frame = self.frames[page_name]
         frame.tkraise()
@@ -122,7 +131,10 @@ class Quiz(Frame):
         label_filter =  Label(self, text='Filters:')
         label_filter.pack()
 
-        # list_q2 = ['Brad Pitt', 'Tom Hanks', 'Jennifer Lawrence', 'Meryl  Streep', 'Robert Downey Jr.', 'Johnny Depp']
+        # list_q2 = ['Brad Pitt', 'Tom Hanks', 'Jennifer Lawrence', 'Meryl  Streep', 'Robert Downey Jr.', 'Johnny Depp'] # actors/actresses will not be used
+
+
+        Label(self, text="Genres: What you want / What you don't want").pack()
         # GENRE
         list_genres = [
             "No Filter",
@@ -145,11 +157,14 @@ class Quiz(Frame):
             "War",
             "Western"
         ]
+        # GENRE WE WANT
         initial_genres = StringVar()
         initial_genres.set(list_genres[0])
-        menu_genre = OptionMenu(self, initial_genres, *list_genres)
-        menu_genre.pack()
-        # GENRE
+        OptionMenu(self, initial_genres, *list_genres, command=lambda sel = initial_genres: self.update_genre(sel, 0)).pack()
+        # GENRE WE DONT WANT
+        initial_genres_1 = StringVar()
+        initial_genres_1.set(list_genres[0])
+        OptionMenu(self, initial_genres_1, *list_genres, command=lambda sel = initial_genres_1: self.update_genre(sel, 1)).pack()
 
         # INTENDED AUDIENCE
         list_audience = [
@@ -166,6 +181,11 @@ class Quiz(Frame):
     def update_movie(self, selection, q_num, mapping): # 1-indexed
         global MOVIE_ID
         MOVIE_ID[q_num - 1] = mapping[selection]
+
+
+    def update_genre(self, sel, loc):
+        global FILTERS
+        FILTERS['genre'][loc] = f'Genre_{sel}';
         
 
 
@@ -178,21 +198,32 @@ class Results(Frame):
         label.pack(side="top", fill="x", pady=10)
 
         self.knn = models.KNN_COLLAB('no pkl', 'no_csv')
+        self.matrixfact = models.MatrixFactorizationModel('./data/torchsvd.pt')
 
         Button(self, text="Another?",command= self.update).pack() # back button
 
 
-    def knn_collab(self):
+    def show_predictions(self):
         #### show KNN results
-        list_knn = self.knn.recommend(MOVIE_ID, {"genre": "smth"})
+        list_knn = self.knn.recommend(MOVIE_ID, FILTERS)
+        list_matrix_fact = self.matrixfact.recommend(MOVIE_ID, FILTERS)
 
+        Label(self, text="KNN Predictions").pack()
         initial_q1  = StringVar()
         initial_q1.set(list_knn[0])
         self.menu_knn = OptionMenu(self, initial_q1, *list_knn)
         self.menu_knn.pack()
 
+        Label(self, text="Matrix Factorization Predictions").pack()
+        initial_q2  = StringVar()
+        initial_q2.set(list_matrix_fact[0])
+        self.menu_matixfact = OptionMenu(self, initial_q2, *list_matrix_fact)
+        self.menu_matixfact.pack()
+
+
     def update(self):
         self.menu_knn.pack_forget()
+        self.menu_matixfact.pack_forget()
         self.controller.show_frame("Quiz")
 
 
