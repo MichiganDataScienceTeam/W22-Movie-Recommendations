@@ -212,9 +212,17 @@ class Quiz(Frame):
         # create label and add resize image
         meme_label1 = Label(self, image=meme_img1)
         meme_label1.image = meme_img1
-        meme_label1.grid(row=6, column=0)
+        meme_label1.grid(row=2, column=0)
         Button(self, text="Get Results",command=lambda: self.controller.show_frame("Results")).grid(row=7, column=1) # back button
         Button(self, text="Back to Menu",command=lambda: self.controller.show_frame("StartPage")).grid(row=10, column=0, sticky='w')
+
+        image1 = Image.open("./icons/infinity_war.png")
+        resize_image1 = image1.resize((312, 234))
+        meme_img1 = ImageTk.PhotoImage(resize_image1)
+        meme_label2 = Label(self, image=meme_img1)
+        meme_label2.image = meme_img1
+        meme_label2.grid(row=6, column=0)
+
 
 
     def update_movie(self, selection, q_num, mapping): # 1-indexed
@@ -254,7 +262,7 @@ class Results(Frame):
         self.knn = models.KNN_COLLAB('no pkl', 'no_csv')
         self.matrixfact = models.MatrixFactorizationModel('./data/torchsvd.pt')
 
-        Button(self, text="Another?",command= self.update).grid(row=2, column=1) # back button
+        Button(self, text="Another?",command= self.update).grid(row=5, column=1) # back button
 
 
     def show_predictions(self):
