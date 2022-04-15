@@ -9,12 +9,13 @@ class Filter:
 
     def all_filters(self, recommendations, movies, filters): # (df, list[movie id's], dict)
         recommendations = self.drop_movies(recommendations, movies)
-        # recommendations = self.drop_year(recommendations, filters)
+        recommendations = self.drop_year(recommendations, filters)
         recommendations = self.drop_genres(recommendations, filters)
         # recommendations = self.drop_audience(recommendations, filters)
-        # recommendations = self.drop_runtime(recommendations, filters)
+        recommendations = self.drop_runtime(recommendations, filters)
 
-        # print(recommendations['movie'][:N].to_list())
+        # print(recommendations['movie'][:N].to_list()
+
         return recommendations['movie'][:N].to_list()
 
     def drop_movies(self, recommendations, movies):
@@ -22,11 +23,11 @@ class Filter:
 
 
     def drop_year(self, recommendations, filters):  # need two year filters, <= and >=
-        before = filters['before_year']
-        after = filters['after_year']
-        beforeyear = self.df_filters["year"] <= before
-        afteryear = self.df_filters["year"] >= after
-        recommendations = recommendations['movie'] in beforeyear and afteryear
+
+        before = filters['year'][1]
+        after = filters['year'][0]
+        validyears = self.df_filters[(self.df_filters['year'] <= before) & (self.df_filters['year'] >= after)]
+        recommendations = recommendations[recommendations['movie'].isin(list(validyears['cleaned_mov_id'].values)) == True]
         return recommendations
 
 
@@ -47,6 +48,9 @@ class Filter:
 
 
     def drop_runtime(self, recommendations, filters):
-        less = filters['less_runtime']
-        recommendations = recommendations.loc[recommendations["runtime"] <= less]
+        before = filters['runtime'][1]
+        after = filters['runtime'][0]
+    
+        validyears = self.df_filters[(self.df_filters['runtime'] <= before) & (self.df_filters['runtime'] >= after)]
+        recommendations = recommendations[recommendations['movie'].isin(list(validyears['cleaned_mov_id'].values)) == True]
         return recommendations
