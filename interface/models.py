@@ -3,7 +3,11 @@ import pickle as pkl
 import csv
 import pandas as pd
 import numpy as np
-from filter import Filter
+
+import os, sys
+p = os.path.abspath('.')
+sys.path.insert(1, p)
+from interface.filter import Filter
 import torch
 
 
