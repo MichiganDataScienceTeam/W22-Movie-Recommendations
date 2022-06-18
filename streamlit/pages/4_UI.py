@@ -1,4 +1,3 @@
-from turtle import onclick
 import streamlit as st
 import os, sys
 import pandas as pd
@@ -103,8 +102,8 @@ FILTERS['genre'][1] = filterHelper(col2.selectbox("Exclude Genre", genres))
 FILTERS['year'][0] = col1.selectbox("Start Year", years)
 FILTERS['year'][1] =col2.selectbox("End Year", years[::-1])
 
-FILTERS['runtime'][0] = col1.selectbox("Start Runtime (Min)", rtimes)
-FILTERS['runtime'][1] = col2.selectbox("End Runtime (Min)", rtimes[::-1])
+FILTERS['runtime'][0] = col1.selectbox("Minimum Runtime", rtimes)
+FILTERS['runtime'][1] = col2.selectbox("Maximum Runtime", rtimes[::-1])
 
 #RESULTS
 st.header("Results")
