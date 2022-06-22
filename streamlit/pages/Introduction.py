@@ -2,7 +2,7 @@ import streamlit as st
     
 
 def intro():
-    st.set_page_config('MDST Movie Recs', 'https://avatars.githubusercontent.com/u/15266139?s=200&v=4')
+    # st.set_page_config('MDST Movie Recs', 'https://avatars.githubusercontent.com/u/15266139?s=200&v=4')
     st.title('Movie Recommendations')
     st.image('./icons/front_page_movies.png')
     st.markdown('**Project Leads:** _Justin Paul, Sachchit Kunichetty_')
@@ -32,6 +32,3 @@ def intro():
     st.markdown("To make these guesses, we studied two fundamental types of collaborative filtering approaches: a **Nearest Neighbor** approach and a **Latent Factor** approach.")
 
     st.image('https://avatars.githubusercontent.com/u/15266139?s=200&v=4')
-    
-if __name__ == '__main__':
-    intro()
