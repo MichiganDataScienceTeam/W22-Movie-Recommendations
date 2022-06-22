@@ -107,7 +107,7 @@ class MatrixFactorizationModel(BaseModel):
         self.utility_matrix = self.load_util()
 
     def load_util(self):
-        data = pathlib.Path.cwd()
+        data = pathlib.Path.cwd() / 'data'
         utility_matrix = pd.read_csv(data / "user_rating_matrix.csv", index_col=0)
         utility_matrix.columns.name = utility_matrix.index.name
         utility_matrix.index.name = "title"
