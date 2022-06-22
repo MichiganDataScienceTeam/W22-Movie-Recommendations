@@ -3,6 +3,7 @@ import pickle as pkl
 import csv
 import pandas as pd
 import numpy as np
+import pathlib
 
 import os, sys
 p = os.path.abspath('.')
@@ -93,7 +94,8 @@ class KNN_COLLAB(BaseModel):
         return [self.utility_matrix.index[x] for x in recommendations]  # df
 
     def load_util(self):
-        utility_matrix = pd.read_csv("data/user_rating_matrix.csv", index_col=0)
+        data = pathlib.Path.cwd() / 'data'
+        utility_matrix = pd.read_csv(data / "user_rating_matrix.csv", index_col=0)
         utility_matrix.columns.name = utility_matrix.index.name
         utility_matrix.index.name = "title"
         return utility_matrix
@@ -105,7 +107,8 @@ class MatrixFactorizationModel(BaseModel):
         self.utility_matrix = self.load_util()
 
     def load_util(self):
-        utility_matrix = pd.read_csv("data/user_rating_matrix.csv", index_col=0)
+        data = pathlib.Path.cwd()
+        utility_matrix = pd.read_csv(data / "user_rating_matrix.csv", index_col=0)
         utility_matrix.columns.name = utility_matrix.index.name
         utility_matrix.index.name = "title"
         return utility_matrix

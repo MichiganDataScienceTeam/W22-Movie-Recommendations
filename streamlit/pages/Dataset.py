@@ -15,6 +15,7 @@ def readData():
     return featuresDF, urMatrixDF
 
 def dataset():
+    st.markdown(f'{pathlib.Path.cwd()}')
     # st.set_page_config('Dataset', 'https://avatars.githubusercontent.com/u/15266139?s=200&v=4')
     st.title("Datasets")
     fDF, urDF = readData()
