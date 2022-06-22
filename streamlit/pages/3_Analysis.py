@@ -17,7 +17,7 @@ col2.caption("Histogram of rating frequencies")
 
 #NEAREST NEIGHBORS
 st.header("Nearest Neighbors")
-st.markdown("Below are some sample movie suggestions")
+st.caption("Top 10 movie recommendations for _Forrest Gump,_ _Iron Man,_ and _Avatar._")
 
 dfKNN = pd.DataFrame({"Forrest Gump (1994)":["Jurassic Park (1993)", "The Shawshank Redemption (1994)", "Apollo 13 (1995)", "Pulp Fiction (1994)", "Braveheart (1995)", \
     "Mrs. Doubtfire (1993)", "The Lion King (1994)", "Speed (1994)", "The Silence of the Lambs (1991)", "Terminator 2: Judgement Day (1991)"],\
@@ -36,6 +36,8 @@ sec8 = pd.DataFrame({"8 Seconds (1994)": ["Johnny Be Good (1988)", "The Serpent 
         "Movie ID": ["140", "4598", "7515", "425", "1384", "1207", "6026", "6080", "2424", "3387"],\
             "Distance": ["0.000000", "0.000000", "1.000000", "2.236068", "2.692582", "2.872281", "3.162278", "3.201562", "3.605551", "3.500000"]})
 sec8.index += 1
+
+st.caption("Top 10 movie recommendations for _8 Seconds_ and their corresponding IDs and distances (in euclidean space)")
 st.dataframe(sec8)
 st.markdown("Less popular movies are harder to predict. One difficulty with dealing with the long-tail problem is that the actual vectors representing \
             each movie can realistically be the same. For example, _8 Seconds,_ _Johnny Be Good,_ and _The Serpent and the Rainbow_ have the same ratings. \

@@ -87,6 +87,7 @@ genres = [
 years =[1970, 1980, 1990, 2000, 2010, 2020]
 rtimes =[0, 60, 75, 90, 105, 120, 135, 150, 165, 180, 300]
 
+st.markdown("Pick your favorite movie in each of the selection boxes")
 col1, col2, col3 = st.columns(3)
 MOVIE_ID[0] = q1[col1.selectbox("Q1", sorted(q1.keys()))]
 MOVIE_ID[1] = q2[col2.selectbox("Q2", sorted(q2.keys()))]
@@ -94,6 +95,7 @@ MOVIE_ID[2] = q3[col3.selectbox("Q3", sorted(q3.keys()))]
 
 #FILTER
 st.header('Filter Movies')
+st.markdown("Add filters to the recommender")
 
 col1, col2 = st.columns(2)
 FILTERS['genre'][0] = filterHelper(col1.selectbox("Required Genre", genres))
