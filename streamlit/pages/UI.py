@@ -1,5 +1,5 @@
 import streamlit as st
-import os, sys
+import os, sys, pathlib
 import pandas as pd
 
 p = os.path.abspath('.')
@@ -8,7 +8,9 @@ from interface import models
 
 @st.cache(allow_output_mutation=True)
 def loadModels():
-    return models.KNN_COLLAB('no pkl', 'no_csv'), models.MatrixFactorizationModel('./data/torchsvd.pt')
+    p = pathlib.Path.cwd()
+    data = p / 'data'
+    return models.KNN_COLLAB('no pkl', 'no_csv'), models.MatrixFactorizationModel(data / 'torchsvd.pt')
 
 def filterHelper(string):
     return f'Genre_{string}'
